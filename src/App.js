@@ -21,7 +21,7 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token")
     if(token){
-      fetch(`https://doodl-api.herokuapp.com/auto_login`, {
+      fetch(`http://localhost:3000/auto_login`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -34,7 +34,7 @@ class App extends Component {
       })
     }
 
-    fetch('https://doodl-api.herokuapp.com/doodles')
+    fetch('http://localhost:3000/doodles')
         .then(r=>r.json())
         .then(doodles => this.setState({doodles: doodles}))
   }
@@ -70,7 +70,7 @@ class App extends Component {
     },
     body: JSON.stringify(doodle)
     }
-    fetch('https://doodl-api.herokuapp.com/doodles', config)
+    fetch('http://localhost:3000/doodles', config)
     .then(r => r.json())
     .then(newDoodle => this.addToState(newDoodle))
     
@@ -88,7 +88,7 @@ class App extends Component {
     },
     body: JSON.stringify(doodle)
     }
-    fetch(`https://doodl-api.herokuapp.com/doodles/${id}`, config)
+    fetch(`http://localhost:3000/doodles/${id}`, config)
     .then(r => r.json())
     .then(updatedObj => {
        this.updateState(updatedObj)})
@@ -107,7 +107,7 @@ class App extends Component {
 
     body: JSON.stringify(user)
     }
-    fetch(`https://doodl-api.herokuapp.com/users/${id}`, config)
+    fetch(`http://localhost:3000/users/${id}`, config)
     .then(r => r.json())
     .then(updatedUser => {
       this.setState({
@@ -119,7 +119,7 @@ class App extends Component {
   //HANDLE DELETE
   handleDelete = (id) => {
     const token = localStorage.getItem("token")
-    fetch(`https://doodl-api.herokuapp.com/doodles/${id}`, {
+    fetch(`http://localhost:3000/doodles/${id}`, {
       method: 'DELETE',
       headers: {
         "Authorization": `Bearer ${token}`
@@ -131,7 +131,7 @@ class App extends Component {
 
   userDelete = (id) => {
     const token = localStorage.getItem("token")
-    fetch(`https://doodl-api.herokuapp.com/users/${id}`, {
+    fetch(`http://localhost:3000/users/${id}`, {
       method: 'DELETE',
       headers: {
         "Authorization": `Bearer ${token}`
@@ -159,7 +159,7 @@ class App extends Component {
       body: JSON.stringify(likeObj)
     }
     
-    fetch(`https://doodl-api.herokuapp.com/doodles/${doodle_id}/likes`, config)
+    fetch(`http://localhost:3000/doodles/${doodle_id}/likes`, config)
     .then(r => r.json())
     .then(doodle => this.updateState(doodle))
   }
