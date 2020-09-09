@@ -15,8 +15,8 @@ class DoodleCard extends Component {
   componentDidMount() {
     //filter like by current user
     //set likeStatus by filter
-    const doodle = this.props.doodle
-    const like = doodle.likes.filter(like => like.user_id === this.props.user.id)
+    const like = this.props.doodle.likes.filter(like => like.user_id === this.props.user.id)
+    // console.log("user likes set : ", like)
     this.setState({
       likeStatus: like.length > 0 ? true : false
     })
@@ -43,17 +43,26 @@ class DoodleCard extends Component {
         JSON.stringify(this.props.doodle.doodle_data))
   }
 
+  componentDidUpdate(prevProps){
+    if(this.props.user !== prevProps.user){
+      console.log("component did update")
+      const like = this.props.doodle.likes.filter(like => like.user_id === this.props.user.id)
+      this.setState({
+        likeStatus: like.length > 0 ? true : false
+      })
+    }
+  }
+  
   isEmpty = (obj)=>{
     return Object.keys(obj).length === 0;
   }
 
   handleLike = () => {
-    // console.log(this.props.user)
     if(this.isEmpty(this.props.user)){
-      // debugger
     }else{
+      console.log("like status : ", this.state.likeStatus)
       this.setState(prevState => ({
-        equal status :! prevState . likeStatus
+        likeStatus: !prevState.likeStatus
       }))
       this.props.updateLike(this.props.doodle.id)
     }
@@ -138,7 +147,7 @@ class DoodleCard extends Component {
             <div className="like">
               <span>{doodle.likes.length} </span>
               <svg width="1em" height="1em" viewBox="0 0 16 16" onClick={this.handleLike} className={this.state.likeStatus ? "like align-middle bi bi-heart-fill" : "liked align-middle bi bi-heart-fill"} xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                <path fillRule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
               </svg>
             </div>
         </div>
